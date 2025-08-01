@@ -7,4 +7,4 @@ pdfplumber
 python-dotenv
 huggingface-hub
 transformers
-lanchain_google_genai
+langchain_google_genai
