@@ -1,6 +1,8 @@
-langchain 
-streamlit 
-faiss-cpu 
-sentence-transformers
+streamlit
+langchain
+faiss-cpu
+google-generativeai
 pdfplumber
-pandas
+python-dotenv
+huggingface-hub
+transformers
