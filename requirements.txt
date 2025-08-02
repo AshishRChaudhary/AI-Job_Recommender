@@ -8,4 +8,5 @@ python-dotenv
 huggingface-hub
 transformers
 langchain_google_genai
-sentence-transformer
+sentence-transformers
+
