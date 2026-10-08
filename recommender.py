@@ -21,7 +21,7 @@ LLM_TIMEOUT_SECONDS = 60
 PROVIDER_KEYS = {"openai": "OPENAI_API_KEY", "gemini": "GOOGLE_API_KEY"}
 PROVIDER_NAMES = {"openai": "OpenAI", "gemini": "Google Gemini"}
 DEFAULT_OPENAI_MODEL = "gpt-6-luna"  # OpenAI's low-cost model for high-volume tasks
-DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
+DEFAULT_GEMINI_MODEL = "gemini-3.8-flash"  # gemini-2.5-flash is retired for new users
 KEY_HINT = "Add it to .env (local) or Streamlit secrets (deployed)."
 
 
@@ -45,7 +45,8 @@ def get_provider():
 # Chat model for the selected provider
 def get_llm():
     if get_provider() == "openai":
-        # No temperature: GPT-6 (and GPT-5) reasoning models reject custom values.
+        # No temperature for either provider: GPT-6/GPT-5 reasoning models reject custom
+        # values, and Gemini 3 models are tuned for their default.
         return ChatOpenAI(
             model=os.getenv("OPENAI_MODEL") or DEFAULT_OPENAI_MODEL,
             api_key=os.getenv("OPENAI_API_KEY"),
@@ -55,7 +56,6 @@ def get_llm():
 
     return ChatGoogleGenerativeAI(
         model=os.getenv("GEMINI_MODEL") or DEFAULT_GEMINI_MODEL,
-        temperature=0.3,
         google_api_key=os.getenv("GOOGLE_API_KEY"),
         timeout=LLM_TIMEOUT_SECONDS,
         max_retries=1,
