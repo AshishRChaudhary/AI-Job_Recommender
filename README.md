@@ -59,7 +59,7 @@ App builds each result's title, link and source from the job data
 The app works with **OpenAI** or **Google Gemini**. You only need one key:
 
 * `OPENAI_API_KEY` set → uses OpenAI (default model `gpt-6-luna`)
-* only `GOOGLE_API_KEY` set → uses Gemini (default model `gemini-2.5-flash`)
+* only `GOOGLE_API_KEY` set → uses Gemini (default model `gemini-3.8-flash`)
 * both set → uses OpenAI, unless `LLM_PROVIDER` says otherwise
 
 **Local:** create a `.env` file in your project root:
@@ -73,7 +73,7 @@ GOOGLE_API_KEY="your_gemini_api_key"
 # LLM_PROVIDER="openai"
 # Optional: override the models
 # OPENAI_MODEL="gpt-6-luna"
-# GEMINI_MODEL="gemini-2.5-flash"
+# GEMINI_MODEL="gemini-3.8-flash"
 ````
 
 **Streamlit Community Cloud:** add the same keys under **App settings → Secrets** as top-level entries (Streamlit exposes them to the app as environment variables):
@@ -133,7 +133,8 @@ streamlit run app.py
 | LangChain 1.0 removed `langchain.chains` / `langchain.vectorstores` | Pinned dependency versions and moved to `langchain-community`, `langchain-huggingface` and a direct retrieval + prompt flow |
 | Embedding model only reads ~256 tokens, so long resumes were cut off | Split the resume into chunks and rank jobs by their best-matching chunk |
 | Arbeitnow is mostly European jobs | Added **Remotive** remote jobs as a second source, with per-source fallback |
-| GPT-6 reasoning models reject `temperature` | Only send `temperature` to Gemini; OpenAI uses the model default |
+| GPT-6 reasoning models reject `temperature` | No `temperature` is sent; both providers use the model default |
+| `gemini-2.5-flash` retired for new users (404 NOT_FOUND) | Default Gemini model is now `gemini-3.8-flash` (override with `GEMINI_MODEL`) |
 | Job listings could prompt-inject the LLM into adding fake links or tracking images | The LLM returns only job numbers + reasons (structured output); titles, links and sources are built in code and all text is markdown-escaped |
 | Default PyTorch install pulls ~3 GB of unused CUDA libraries on Linux | `requirements.txt` installs the CPU-only `torch` build on Linux |
 
