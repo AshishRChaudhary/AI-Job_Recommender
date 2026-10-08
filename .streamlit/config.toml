@@ -1,0 +1,6 @@
+[server]
+# Streamlit's file watcher inspects every loaded module. With transformers installed,
+# that triggers lazy imports of vision models that need torchvision (not installed),
+# filling the logs with ModuleNotFoundError and wasting memory. The app doesn't need
+# hot reloading in production, so the watcher is turned off.
+fileWatcherType = "none"
